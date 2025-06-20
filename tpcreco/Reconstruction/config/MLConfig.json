@@ -3,7 +3,7 @@
         "TfModelPath": "./model-test",
         "InputDim": [1, 256, 512, 3],
         "OutputDim": [1, 9],
-        "controllerConfigPath": "../config/montecarlo_ModuleConfig.json",
+        "controllerConfigPath": "/opt/tpcreco/build/config/montecarlo_ModuleConfig.json",
         "geometryFile": "geometry_ELITPC_190mbar_3332Vdrift_25MHz.dat" 
     }
 }

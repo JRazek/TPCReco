@@ -75,6 +75,22 @@ RUN version=2.18.0 && \
     ldconfig
 
 
+FROM tpcreco-base AS tpcreco-build
+
+WORKDIR /opt/tpcreco/
+COPY resources resources
+COPY package package
+COPY tools tools
+COPY cmake cmake
+COPY CMakeLists.txt .
+#use tpcreco directory at the last possible stage to exploit caching, when editing source code
+COPY tpcreco tpcreco
+RUN mkdir /opt/tpcreco/build
+WORKDIR /opt/tpcreco/build
+RUN cmake -D BUILD_GEANT_MODULE=ON CMAKE_EXPORT_COMPILE_COMMANDS=ON ..
+RUN make -j$(nproc) && make install
+
+
 FROM tpcreco-base AS clangd-server
 USER root
 

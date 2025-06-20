@@ -4,6 +4,17 @@ target "tpcreco-base" {
   tags = ["tcprepo/tpcreco-base:latest"]
 }
 
+target "tpcreco-build" {
+  dockerfile = "./docker/TFNoGet.dockerfile"
+
+  contexts = {
+    tpcreco-base = "target:tpcreco-base"
+  }
+
+  target = "tpcreco-build"
+  tags = ["tcprepo/tpcreco-build:latest"]
+}
+
 target "clangd-server" {
   dockerfile = "./docker/TFNoGet.dockerfile"
   context = "."

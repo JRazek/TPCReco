@@ -17,9 +17,9 @@ file(GLOB_RECURSE sources       ${PROJECT_SOURCE_DIR}/${MODULE_NAME}/src/*.cpp)
 ###############################################################################
 include_directories(${ROOTINCDIR})
 include_directories(${Boost_INCLUDE_DIRS})
-include_directories(${PROJECT_SOURCE_DIR}/${MODULE_NAME}/include)
-include_directories(${PROJECT_SOURCE_DIR}/DataFormats/include)
-include_directories(${PROJECT_SOURCE_DIR}/Utilities/include)
+include_directories(${PROJECT_SOURCE_DIR}/tpcreco/${MODULE_NAME}/include)
+include_directories(${PROJECT_SOURCE_DIR}/tpcreco/DataFormats/include)
+include_directories(${PROJECT_SOURCE_DIR}/tpcreco/Utilities/include)
 ###############################################################################
 ## target definitions #########################################################
 ###############################################################################

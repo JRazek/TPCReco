@@ -2,11 +2,11 @@ set(MODULE_NAME "GUI")
 message(STATUS "Adding CMake fragment for module:\t${MODULE_NAME}")
 
 # ROOT 6.08 dictionary MODULE workaround
-include_directories(${PROJECT_SOURCE_DIR}/DataFormats/include/)
-include_directories(${PROJECT_SOURCE_DIR}/Reconstruction/include)
-include_directories(${PROJECT_SOURCE_DIR}/Analysis/include)
-include_directories(${PROJECT_SOURCE_DIR}/Utilities/include)
-include_directories(${PROJECT_SOURCE_DIR}/GUI/include)
+include_directories(${PROJECT_SOURCE_DIR}/tpcreco/DataFormats/include/)
+include_directories(${PROJECT_SOURCE_DIR}/tpcreco/Reconstruction/include)
+include_directories(${PROJECT_SOURCE_DIR}/tpcreco/Analysis/include)
+include_directories(${PROJECT_SOURCE_DIR}/tpcreco/Utilities/include)
+include_directories(${PROJECT_SOURCE_DIR}/tpcreco/GUI/include)
 root_generate_dictionary(
   G__${TPCRECO_PREFIX}${MODULE_NAME}
   ${CMAKE_CURRENT_SOURCE_DIR}/include/TPCReco/MainFrame.h
