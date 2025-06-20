@@ -1,0 +1,27 @@
+services:
+  tpcreco:
+    image: tcprepo/tpcreco-base:latest
+    volumes:
+#      - ../:/opt/tpcreco
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    stdin_open: true
+    tty: true
+    command: /bin/bash
+
+  tpc-clangd:
+    image: tcprepo/clangd-server:latest
+    working_dir: /opt/tpcreco
+    entrypoint: >
+      sh -c "/usr/local/bin/docker_clangd_entrypoint.sh && 
+      clangd 
+      --clang-tidy
+      --compile-commands-dir=/opt/tpcreco/build
+      --path-mappings=${TPCRECO_ROOT_DIR}=/opt/tpcreco,/tmp/tpcreco-clangd/usr=/usr,/tmp/tpcreco-clangd/usr/local=/usr/local"
+    volumes:
+#       - ${TPCRECO_ROOT_DIR}:/opt/tpcreco:ro
+       - ${TPCRECO_ROOT_DIR}/Reconstruction:/opt/tpcreco/Reconstruction
+       - ${TPCRECO_ROOT_DIR}/EventSources:/opt/tpcreco/EventSources
+       - ${TPCRECO_ROOT_DIR}/Utilities:/opt/tpcreco/Utilities
+       - /tmp/tpcreco-clangd:/root_copy_docker/
+    env_file:
+      - .env

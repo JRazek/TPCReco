@@ -73,3 +73,34 @@ RUN version=2.18.0 && \
     echo "Extracting..." && \
     tar -C /usr/local -xzf /tmp/tensorflow.tar.gz && \
     ldconfig
+
+
+FROM tpcreco-base AS clangd-server
+USER root
+
+RUN apt update &&   \
+    apt install -y  \
+    build-essential \
+    xz-utils        \
+    curl            \ 
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl -SL https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.1/clang+llvm-12.0.1-x86_64-linux-gnu-ubuntu-16.04.tar.xz | tar -xJC .
+RUN cp -r clang+llvm-12.0.1-x86_64-linux-gnu-ubuntu- /usr/local/clang-12.0.1
+
+ENV LD_LIBRARY_PATH=/usr/local/clang-12.0.1/lib:$LD_LIBRARY_PATH
+ENV PATH=/usr/local/clang-12.0.1/bin:$PATH
+
+RUN ldconfig
+
+
+WORKDIR /opt/tpcreco/
+COPY . .
+RUN mkdir /opt/tpcreco/build
+WORKDIR /opt/tpcreco/build
+
+RUN cmake -D BUILD_GEANT_MODULE=ON CMAKE_EXPORT_COMPILE_COMMANDS=ON ..
+
+COPY ./docker/docker_clangd_entrypoint.sh /usr/local/bin/docker_clangd_entrypoint.sh
+RUN chmod +x /usr/local/bin/docker_clangd_entrypoint.sh
+
